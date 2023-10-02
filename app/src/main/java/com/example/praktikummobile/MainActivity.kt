@@ -1,5 +1,6 @@
 package com.example.praktikummobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,37 +10,28 @@ import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var input_panjang : EditText
-    private lateinit var input_lebar : EditText
-    private lateinit var input_tinggi : EditText
-    private lateinit var btn : Button
-    private lateinit var teks_hasil : TextView
-    companion object {
-        private const val STATE_RESULT =  "state_result"
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        input_lebar= findViewById(R.id.edt_width)
-        input_panjang= findViewById(R.id.edt_length)
-        input_tinggi= findViewById(R.id.edt_height)
-        btn= findViewById(R.id.btn_result)
-        teks_hasil= findViewById(R.id.result)
 
-        btn.setOnClickListener(this)
 
-        if (savedInstanceState != null){
-            teks_hasil.text = savedInstanceState.getString(STATE_RESULT)
+        val btnMoveActivity: Button = findViewById(R.id.btn_move_activity)
+        btnMoveActivity.setOnClickListener(this)
+    }
+
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.btn_move_activity -> {
+                val moveWithDataIntent = Intent(this@MainActivity, MoveWithDataActivity::class.java)
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_NAME, "Ayu Tinambunan")
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_AGE, 20)
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_PRODI, "pti")
+                startActivity(moveWithDataIntent)
+            }
         }
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(STATE_RESULT, teks_hasil.text.toString())
-    }
-
-
-
 }
 
 
